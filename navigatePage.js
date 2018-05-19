@@ -101,7 +101,7 @@ function initMap(){
         
     //Displaying the path
     mapUpdates.polyLine=new google.maps.Polyline({
-        path: selectedPath.locations,
+        path: pathSelected.locations,
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
@@ -185,7 +185,7 @@ function showCurrentPosition(){
 }
 
 /*
-headingUpdate FUNCTION
+userHeadingUpdate FUNCTION
     this function handles the updates to the display of the app, based on features
     related to the heading of the user
 */
@@ -214,7 +214,66 @@ function userHeadingUpdate(){
         htmlOutput.image.src="images/uturn.svg"   
     }
 }
-        
+
+/*
+displayUpdate FUNCTION
+    this function handles the updates to the display of the app, based on all location based elements
+*/
+function displayUpdate{
+    //center map to current location
+    mapUpdates.map.panTo(currentLocation.location);
+    var accuracyColour;   
+    
+    // altering the accuracy radius to be green if accuracy less than 30, else red
+    if (currentLocation.accuracy<30{
+        accuracyColour= '#00FF00'
+    }else {
+        accuracyColour= '#FF0000'
+    }
+    
+    mapUpdates.accuracy.setOptions({
+        center:currentLocation.location,
+        fillColor: accuracyColour,
+        radius: currentLocation.accuracy,
+        map: mapUpdates.map
+    })
+             
+    mapUpdates.marker.setOptions({
+        position: currentLocation.location,
+        map: mapUpdates.map
+    })
+    
+    //waypoint is updated if the point is within the accuracy
+    if (wayPoint.distance < currentLocation.accuracy){
+        if (wayPoint.index == pathSelected.locations.length-1){
+            displayMessage("You have reached your destiantion!")
+        }else{
+            wayPoint.index += 1;
+        }
+    }
+    
+    //distance to way point
+    wayPoint.distance=google.maps.geometry.spherical.computeLength([currentLocation.location,pathSelected.locations[wayPoint.index]])  
+    // calculate distance of whole path    
+    wholePath.distance=(wayPoint.distance)+google.maps.geometry.spherical.computeLength(pathSelected.locations.slice(wayPoint.index,pathSelected.locations.length));
+    // remaining time    
+    wholePath.remainingTime=(wholePath.distance/travel.speed)/60;
+    // direction to waypoint  
+    wayPoint.direction=google.maps.geometry.spherical.computeHeading(currentLocation.location,pathSelected.locations[wayPoint.index])  
+    // Making direction to waypoint positive
+    if (wayPoint.direction<0){
+        wayPoint.direction=360-Math.abs(wayPoint.direction)//absolute to avoid negative angle
+    }
+    
+    //displayin the calculations above
+    htmlOutput.destinationDistance.innerHTML=wayPoint.distance.toFixed(1)+"m.";
+    htmlOutput.speed.innerHTML=(userTravel.speed).toFixed(2)+"km/h.";
+    if (userTravel.speed==0){
+        htmlOutput.time.innerHTML="???";
+    }else{
+        htmlOutput.time.innerHTML=wholePath.remainingTime.toFixed(2)+"mins."; 
+    }
+}
 
 
 
