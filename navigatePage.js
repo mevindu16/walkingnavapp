@@ -23,4 +23,27 @@ var outputHTML = {
 }
 
 
+//path selected 
+var pathSelected = listOfPaths[pathIndex - 1];
+
+//Tracking user travel 
+var userTravel={
+    locationHistory:[],
+    distance:0,
+    initTime: new Date().getTime(),
+    totalTime:0,
+    speed:0
+    
+};
+//Tracking current location
+var currentLocation={
+    location:{
+        lat:0,
+        lng:0
+    },
+    heading:0,
+    accuracy:0
+}
+
+
 
