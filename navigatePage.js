@@ -22,7 +22,6 @@ var outputHTML = {
     eta:document.getElementById("eta")
 }
 
-
 //path selected 
 var pathSelected = listOfPaths[pathIndex - 1];
 
@@ -110,5 +109,33 @@ function initMap(){
         map: mapUpdates.map
     })     
 }
+    
+/*
+initLocation FUNCTION
+    this functions sets up location accuracies required foor the app to run 
+and it also uses watchPostion to update the users location
+    this function has access to global variables
+    functions linked to initLocation are: showCurrentLocation, errorHandler 
+and positionOptions
+*/
+function initLocation(){
+    var positionOptions = {
+        enableHighAccuracy: true,
+        timeout: infinty,
+        maximumAge:0};
+        
+    if (navigator.geolocation){
+        navigator.geolocation.watchPosition(showCurrentLocation,errorHandle,positionOptions);
+    }else{
+        //alerting user if not available
+        alert("GPS sensor not available!");
+        return;
+    }
+}
+
+
+
+
+
     
     
