@@ -11,5 +11,16 @@ if (pathIndex !== null){
     document.getElementById("headerBarTitle").textContent = pathNames[pathIndex-1];
 }
 
+// declaring variables that are required 
+//referincing the outputs
+var outputHTML = {    
+    map: document.getElementById("map"),
+    userAction: document.getElementById("userAction"),
+    destinationDistance: document.getElementById("destinationDistance"),
+    image: document.getElementById("image"),
+    averageSpeed: document.getElementById("averageSpeed"),
+    eta:document.getElementById("eta")
+}
+
 
 
