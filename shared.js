@@ -95,17 +95,20 @@ function storePaths(pathsAvailable){
 	pathsAvailable = null;
 }
 
-
-
-
-
-
-	
-	
-	
-		
-		
-
-	
-
-
+/* 
+retrievePaths Function
+	This function obtains the available paths from the local storage and dumps it to 
+a given list
+*/
+function retrievePaths(){
+	if (typeof(Storage) !== "undefined"){
+		var paths = JSON.parse(localStorage.getItem(APP_PREFIX))
+		for (var i = 0; i<paths.length; i++){
+			var current = new Path(paths[i]);
+			pathList.push(current);
+			pathNames.push(current.title);
+		}
+	}else{
+		console.log("ERROR: Local Storage not supported by browser!")
+	}
+}
