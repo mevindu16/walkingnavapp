@@ -45,5 +45,22 @@ var currentLocation={
     accuracy:0
 }
 
+//Updates for the Map
+var mapUpdates={
+    map:null,
+    pointer: null,
+    accuracy: null
+}
+//Next Way Point info
+var wayPoint={
+    index:0,
+    distance:currentLocation.accuracy+1,
+    direction: 0    
+}
+// Whole Path info
+var wholePath={
+    distance:currentLocation.accuracy+1,
+    remainingTime:0
+}
 
 
