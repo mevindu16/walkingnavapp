@@ -26,7 +26,7 @@ var outputHTML = {
 var pathSelected = listOfPaths[pathIndex - 1];
 
 //Tracking user travel 
-var userTravel={
+var travel={
     locationHistory:[],
     distance:0,
     initTime: new Date().getTime(),
@@ -50,13 +50,13 @@ var mapUpdates={
     pointer: null,
     accuracy: null
 }
-//Next Way Point info
+//Information about next waypoint
 var wayPoint={
     index:0,
     distance:currentLocation.accuracy+1,
     direction: 0    
 }
-// Whole Path info
+//Information about the whole path
 var wholePath={
     distance:currentLocation.accuracy+1,
     remainingTime:0
@@ -151,7 +151,41 @@ function errorHandle(error) {
     alert(errorMessage);
 }
 
+/*
+showCurrentLocation FUNCTION
+    this function obtains the user's current locations and updates them 
+each time the user's location changes.
+    this function also makes use of headingUpdate and displayUpdate functions
+*/
 
+function showCurrentPosition(){
+    currentLocation = {
+        location: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+        accuracy: position.coords.accuracy,
+        time: position.timestamp
+        };
+        
+        if (travel.locationHistory.length >= 1){
+            currentLocation.heading=google.maps.geometry.spherical.computeHeading(userTravel.locationHistory[userTravel.locationHistory.length-1],currentLocation.location)
+        }
+        
+        //user travel updates
+        travel.locationHistory.push(currentLocation.location);
+        
+        // tracking user's travel 
+        travel.totalTime = (currentLocation.time - travel.initTime)/1000;
+        
+        //distance travelled 
+        travel.distance=google.maps.geometry.spherical.computeLength(travel.locationHistory);
+            
+        //travelling speed
+        travel.speed = travel.distance / travel.totalTime;
+        
+        headingUpdate(); displayUpdate();
+        
+        
+        
+}
 
 
 
