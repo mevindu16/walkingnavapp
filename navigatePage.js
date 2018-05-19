@@ -133,6 +133,24 @@ function initLocation(){
     }
 }
 
+/*
+errorHandle FUNCTION
+    this function handles errors and gives suitable outputs if thet occur
+*/
+function errorHandle(error) {
+    var errorMessage = "";
+    if (error.code == 1) {
+        errorMessage = "Location access denied by user.";
+    } else if (error.code == 2) {
+        errorMessage = "Location unavailable.";
+    } else if (error.code == 3) {
+        errorMessage = "Location access timed out";
+    } else {
+        errorMessage = "Unknown error getting location.";
+    }
+    alert(errorMessage);
+}
+
 
 
 
