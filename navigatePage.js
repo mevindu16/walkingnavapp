@@ -155,7 +155,7 @@ function errorHandle(error) {
 showCurrentLocation FUNCTION
     this function obtains the user's current locations and updates them 
 each time the user's location changes.
-    this function also makes use of headingUpdate and displayUpdate functions
+    this function also makes use of userHeadingUpdate and displayUpdate functions
 */
 
 function showCurrentPosition(){
@@ -181,11 +181,40 @@ function showCurrentPosition(){
         //travelling speed
         travel.speed = travel.distance / travel.totalTime;
         
-        headingUpdate(); displayUpdate();
-        
-        
-        
+        userHeadingUpdate(); displayUpdate();       
 }
+
+/*
+headingUpdate FUNCTION
+    this function handles the updates to the display of the app, based on features
+    related to the heading of the user
+*/
+function userHeadingUpdate(){
+    // rotating marker
+    mapUpdates.marker.icon.rotation = currentLocation.heading;
+    
+    //displaying user's next action based on waypoint heading and user's current heading
+    if (wayPoint.direction-currentLocation.heading>-25 && wayPoint.direction-currentLocation.heading<25){
+        htmlOutput.userAction.innerHTML="Proceed Ahead." 
+        htmlOutput.image.src="images/straight.svg"
+    }else if(wayPoint.direction-currentLocation.heading>=25 && wayPoint.direction-currentLocation.heading<60){
+        htmlOutput.userAction.innerHTML="Turn Slightly Right."
+        htmlOutput.image.src="images/slight_right.svg"
+    }else if(wayPoint.direction-currentLocation.heading>=60 && wayPoint.direction-currentLocation.heading<110 ){
+        htmlOutput.userAction.innerHTML="Turn Right."
+       htmlOutput.image.src="images/right.svg"
+    } else if(wayPoint.direction-currentLocation.heading<=-25 && wayPoint.direction-currentLocation.heading>-60){
+        htmlOutput.userAction.innerHTML="Turn Slightly Left."
+        htmlOutput.image.src="images/slight_left.svg"
+    } else if(wayPoint.direction-currentLocation.heading<=-60 && wayPoint.direction-currentLocation.heading>=-110 ){
+        htmlOutput.userAction.innerHTML="Turn Left."
+        htmlOutput.image.src="images/left.svg"
+    } else{
+        htmlOutput.userAction.innerHTML="U Turn."
+        htmlOutput.image.src="images/uturn.svg"   
+    }
+}
+        
 
 
 
