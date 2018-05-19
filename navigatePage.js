@@ -275,6 +275,9 @@ function displayUpdate{
     }
 }
 
+// Intializing Map
+initMap();
+initLocation();
 
 
     
