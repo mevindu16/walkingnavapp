@@ -63,4 +63,52 @@ var wholePath={
     remainingTime:0
 }
 
-
+//FUNCTIONS MADE
+/*
+initMap FUNCTION
+    initializes the map with a marker along with an accuracy radius. It also
+includes the path to the desired location
+    this function has access to global variables, in order to update them
+*/
+function initMap(){
+    // initializing the map based on current location
+    mapUpdates.map = new google.maps.Map(outputHTML.map, {center: currentLocation.location, zoom: 20});
+    
+    // displaying the accuracy radius, centered at user's current location
+    mapUpdates.accuracy = new google.maps.Circle({
+        strokeColor: "#850000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#850000",
+        fillOpacity: 0.3,
+        map: mapUpdates.map,
+        center: currentLocation.location,
+        radius: currentLocation.accuracy });
+        
+    // marker showing user's current location 
+    mapUpdates.marker = new google.maps.Marker({
+        position: currentLocation.location,
+        icon: {
+            path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+            scale: 10,
+            anchor: new google.maps.Point(0, 3),
+            rotation: 0,
+            fillColor: "#20B2AA",
+            strokeWeight: 3,
+            fillOpacity: 1
+        },
+        map: mapUpdates.map
+        })
+        
+    //Displaying the path
+    mapUpdates.polyLine=new google.maps.Polyline({
+        path: selectedPath.locations,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2.5,
+        map: mapUpdates.map
+    })     
+}
+    
+    
