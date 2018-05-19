@@ -14,7 +14,7 @@ var data = {
 	campus:"UCL",
 	callback:"storeAvailablePaths"
 }
-jsonpRequest("https://eng1003.monash/api/campusnav/?campus=ucl&callback=CALLBACK",data);
+request("https://eng1003.monash/api/campusnav/?campus=ucl&callback=CALLBACK",data);
 
 /*
 PATH CLASS
@@ -53,6 +53,35 @@ class Path {
 		return (this._locations.length) - 2
 	}
 }
+
+/* 
+request Function
+	This function requests a JSON from a URL specified and calls back
+*/
+function request(url,data){
+	// building URL parameters for each key in data object
+	var parameters = "";
+	for (var key in data){
+		if (data.hasOwnProperty(key)){
+			if (parameters.length == 0){
+				parameters += "?";
+			} else {
+				parameters += "&";
+			}
+			var encodedKey = encodeURIComponent(key);
+			var encodedValue = encodeURIComponent(data[key]);
+			
+			// combining the keys and values 
+			parameters += encodedKey + "=" + encodedValue;
+		}
+	}
+	var script = document.createElement('script');
+	sccript.src = url + parameters;
+	document.body.appendChild(script);
+}
+
+
+
 	
 	
 	
