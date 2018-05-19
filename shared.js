@@ -54,6 +54,7 @@ class Path {
 	}
 }
 
+//_____________________FUNCTIONS MADE______________________________//
 /* 
 request Function
 	This function requests a JSON from a URL specified and calls back
