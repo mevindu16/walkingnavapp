@@ -80,6 +80,24 @@ function request(url,data){
 	document.body.appendChild(script);
 }
 
+/* 
+storePaths Function
+	This function stores the available paths to the local storage with a prefix and 
+given JSON
+*/
+function storePaths(pathsAvailable){
+	if (typeof(Storage) !== "undefined"){
+		jsonPathInstance = JSON.stringify(pathsAvailable);
+		localStorage.setItem(APP_PREFIX, jsonPathInstance);
+	} else {	
+		console.log("ERROR: Local Storage not supported by browser!")
+	}
+	pathsAvailable = null;
+}
+
+
+
+
 
 
 	
