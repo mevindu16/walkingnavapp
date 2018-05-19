@@ -6,3 +6,15 @@ var APP_PREFIX = "monash.eng1003.navigationApp";
 
 // Array of saved Path objects.
 var availablePaths = [];
+var pathList = [];
+var pathNames = [];
+
+// contacting the campus nav web service 
+var data = {
+	campus:"UCL",
+	callback:"storeAvailablePaths"
+}
+
+	
+
+
